@@ -1,4 +1,4 @@
-﻿using Arch.AOT.SourceGenerator;
+using Arch.AOT.SourceGenerator;
 using Arch.Buffer;
 using Arch.Core;
 using Arch.Core.Extensions;
@@ -13,11 +13,22 @@ using System.Text;
 using System.Threading.Tasks;
 using static Godot.HttpRequest;
 
+
+public enum MovementType
+{
+    CIRCLE,SQUARE
+}
+[Component]
+public struct AreaMovement
+{
+    public uint value;
+    public uint value2;
+    public MovementType type;
+}
 [Component]
 public struct TargetMovement
 {
-    public Vector2 value;
-    
+    public Vector2 value;    
 }
 [Component]
 public struct Direction
