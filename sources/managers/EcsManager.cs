@@ -53,10 +53,10 @@ public class EcsManager : SingletonBase<EcsManager>
     private void InitSystems()
     {
         groupCollider = new Group<float>("Collider", new CollisionManager(world));
-        groupMovement = new Group<float>("Movement", new MovementManager(world));
+        groupMovement = new Group<float>("Movement", new SearchMovementTargetSystem(world), new MovementSystem(world));
         groupRender = new Group<float>("Render", new RenderManager(world));
 
-        groupUnits = new Group<float>("Units",  new UnitControllerSystem(world),  new AtackUnitSystem(world));
+        groupUnits = new Group<float>("Units" ,new AtackUnitSystem(world));
         groupRemove = new Group<float>("Remove", new RemoveManager(world));
 
         groupDebugerArch = new Group<float>("DebugerArch", new DebugerManager(world));
@@ -109,7 +109,7 @@ public class EcsManager : SingletonBase<EcsManager>
     }
     public void UpdateSystems(float deltaTime, int tick)
     {
-        groupDebugerArch.Update(in deltaTime);
+        //groupDebugerArch.Update(in deltaTime);
         
 
 
@@ -124,7 +124,7 @@ public class EcsManager : SingletonBase<EcsManager>
         groupRender.BeforeUpdate(in deltaTime);
         groupRender.Update(in deltaTime);
 
-        //groupTransform.Update(in deltaTime);
+        groupTransform.Update(in deltaTime);
         
     }
 

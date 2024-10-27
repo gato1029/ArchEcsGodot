@@ -1,4 +1,4 @@
-﻿using Arch.AOT.SourceGenerator;
+using Arch.AOT.SourceGenerator;
 using Arch.Buffer;
 using Arch.Core;
 using Arch.Core.Extensions;
@@ -14,45 +14,6 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 
-public enum TypeUnit
-{
-    MELLE
-}
-[Component]
-public struct Unit
-{
-    public string name;
-    public Type unitType;
-    public uint team;    
-    public uint health;
-    public uint barrier;
-    public uint shield;
-    public uint resistenceFire;
-    public uint resistenceWater;
-    public uint resistenceEarth;
-    public uint resistenceWind;
-    
-}
-
-[Component]
-public struct Caster
-{
-
-}
-
-
-[Component]
-public struct Melee
-{
-
-}
-
-
-[Component]
-public struct Ranged
-{ 
-
-}
 
 internal class UnitManager
 {
@@ -108,15 +69,16 @@ internal class UnitManager
             entity.Add<HumanController>();
             entity.Add<Health>(new Health { value = 100000 });
             entity.Add<OrderAtack>();
-            entity.Add<Unit>(new Unit { team = 1 });
-            //entity.AddRelationship<RelationWeapon>(entityweapon);
+            entity.Add<Unit>(new Unit { team = 1 });            
         }
         else
         {
             entity.Add<Collider>(new Collider { rect = rectCollider, rectTransform = rectCollider, aplyRotation = true });
-            entity.Add<TargetMovement>(new TargetMovement { value = target });
+            entity.Add<SearchTargetMovement>();
             entity.Add<Health>(new Health { value = 100 });
             entity.Add<OrderAtack>();
+            entity.Add<IAController>();
+            entity.Add<AreaMovement>(new AreaMovement { type = MovementType.CIRCLE_STATIC, origin = position, value = 250});
             entity.Add<Unit>(new Unit { team = 2 });
         }
         
@@ -129,11 +91,21 @@ internal class UnitManager
 
         CollisionManager.dynamicCollidersEntities.AddUpdateItem(position, entity.Reference());
 
-
+        if (!(target == Vector2.Zero))
+        {
+            CreateDebug(entity, 250, position);
+        }
         //CreateDebug(entity, rectColliderAtack,offset);
     }
 
-    private static void CreateDebug(Entity entity, Rect2 rect, Vector2 offset)
+    private static void CreateDebug(Entity entity, int radio, Vector2 position)
+    {
+        Rid canvasItem = RenderingServer.CanvasItemCreate();
+        RenderingServer.CanvasItemSetParent(canvasItem, EcsManager.Instance.CanvasItem);
+        RenderingServer.CanvasItemAddCircle(canvasItem, position, radio, new Color(30,30,30,0.1f));
+
+    }
+        private static void CreateDebug(Entity entity, Rect2 rect, Vector2 offset)
     {
         Rid canvasItem = RenderingServer.CanvasItemCreate();
         RenderingServer.CanvasItemSetParent(canvasItem, EcsManager.Instance.CanvasItem);                       

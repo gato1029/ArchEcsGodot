@@ -17,17 +17,17 @@ public partial class Main : Node2D
     {
 
         EcsManager.Instance.SetCanvasItemRid(GetCanvasItem(),this);
-        for (int i = 0; i < 10000; i++)
+        for (int i = 0; i < 9000; i++)
         {
-            Vector2 randomVector = GetRandomVector2(new Vector2(-100000, -100000), new Vector2(10000, 10000));
+            Vector2 randomVector = GetRandomVector2(new Vector2(-50000, -50000), new Vector2(50000, 50000));
             Vector2 randomVectordes = GetRandomVector2(new Vector2(-10000, -10000), new Vector2(10000, 10000));
 
-            if (i == 0)
-            {
-                randomVector = new Vector2(0, 0);
-                randomVectordes = new Vector2(500, 500);
-                UnitManager.CreateUnit(randomVector, randomVectordes, false);
-            }
+            //if (i == 0)
+            //{
+            //    randomVector = new Vector2(0, 0);
+            //    randomVectordes = new Vector2(500, 500);
+            //    UnitManager.CreateUnit(randomVector, randomVectordes, false);
+            //}
             if (i == 1)
             {
 
