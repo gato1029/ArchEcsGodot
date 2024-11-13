@@ -93,7 +93,7 @@ internal class UnitManager
 
         if (!(target == Vector2.Zero))
         {
-            CreateDebug(entity, 250, position);
+            //CreateDebug(entity, 250, position);
         }
         //CreateDebug(entity, rectColliderAtack,offset);
     }
